@@ -10,7 +10,7 @@ import type { IBook } from "@/Interfaces/book";
 
 const AllBooksPage = () => {
   const { data: books, isLoading } = useGetBooksQuery(undefined);
-  //   console.log(books);
+    // console.log(books);
   const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
      const [dialogOpen, setDialogOpen] = useState(false);

@@ -12,7 +12,7 @@ function App() {
     <Routes>
       
       <Route path="/" element={<Layout />}>
-        <Route index element={<Navigate to="/" />} />
+        <Route index element={<Navigate to="/books" />} />
         <Route path="books" element={<AllBooksPage />} />
         <Route path="/books/:id" element={<SingleBookPage />} />
         <Route path="create-book" element={<CreateBookPage />} />
@@ -21,7 +21,7 @@ function App() {
         <Route path="borrow-summary" element={<BorrowSummaryPage />} />
       </Route>
 
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/books" replace />} />
     </Routes>
   );
 }
