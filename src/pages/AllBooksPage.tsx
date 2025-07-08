@@ -34,16 +34,13 @@ const confirmDelete = async () => {
   }
 };
 
-
-
-
   if (isLoading) return <p className="text-center">Loading...</p>;
 
   return (
     <div className="max-w-6xl mx-auto">
       <h1 className="text-2xl font-bold mb-6">All Books</h1>
 
-      <table className="w-full border-collapse border text-sm md:text-base">
+      <table className="w-full border-collapse border text-sm md:text-base overflow-auto">
         <thead>
           <tr className="bg-gray-100">
             <th className="border px-3 py-2">Title</th>
