@@ -1,4 +1,4 @@
-// src/components/Layout.tsx
+
 import React from 'react';
 import { NavLink, Outlet } from 'react-router-dom';
 
@@ -11,7 +11,7 @@ const navItems = [
 const Layout: React.FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
-      {/* Navbar */}
+   
       <nav className="bg-white shadow-md">
         <div className="container mx-auto px-4 py-3 flex justify-between items-center">
           <div className="text-xl font-bold text-gray-800">Library Management</div>
@@ -34,12 +34,12 @@ const Layout: React.FC = () => {
         </div>
       </nav>
 
-      {/* Main Content */}
+
       <main className="flex-grow container mx-auto px-4 py-6">
         <Outlet />
       </main>
 
-      {/* Footer */}
+
       <footer className="bg-gray-100 text-center text-sm text-gray-600 py-4 mt-auto">
         &copy; {new Date().getFullYear()} Library Management. All rights reserved.
       </footer>

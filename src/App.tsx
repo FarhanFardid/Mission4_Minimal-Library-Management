@@ -9,7 +9,7 @@ import BorrowSummaryPage from './pages/BorrowSummaryPage';
 function App() {
   return (
     <Routes>
-      {/* Use layout with nested routes */}
+      
       <Route path="/" element={<Layout />}>
         <Route index element={<Navigate to="/books" />} />
         <Route path="books" element={<AllBooksPage />} />
@@ -19,7 +19,6 @@ function App() {
         <Route path="borrow-summary" element={<BorrowSummaryPage />} />
       </Route>
 
-      {/* Catch all fallback */}
       <Route path="*" element={<Navigate to="/books" replace />} />
     </Routes>
   );
