@@ -54,6 +54,13 @@ const AllBooksPage = () => {
                   size="sm"
                   onClick={() => navigate(`/edit-book/${book._id}`)}
                 >
+                  View
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate(`/edit-book/${book._id}`)}
+                >
                   Edit
                 </Button>
                 <Button
