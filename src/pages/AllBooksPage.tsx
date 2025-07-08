@@ -6,7 +6,8 @@ import { useState } from 'react';
 import type { IBook } from '@/Interfaces/book';
 
 const AllBooksPage = () => {
-  const { data: books = [], isLoading } = useGetBooksQuery(undefined);
+  const { data: books, isLoading } = useGetBooksQuery(undefined);
+  console.log(books);
   const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
@@ -37,7 +38,7 @@ const AllBooksPage = () => {
           </tr>
         </thead>
         <tbody>
-          {books.map((book:IBook) => (
+          {books?.data?.map((book:IBook) => (
             <tr key={book._id} className="hover:bg-gray-50">
               <td className="border px-3 py-2">{book.title}</td>
               <td className="border px-3 py-2">{book.author}</td>
