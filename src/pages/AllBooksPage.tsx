@@ -1,23 +1,41 @@
-import { useGetBooksQuery, useDeleteBookMutation } from '../redux/features/book/book.api';
-import { useNavigate } from 'react-router-dom';
-import { Button } from '@/components/ui/button';
-import { Dialog, DialogTrigger, DialogContent } from '@/components/ui/dialog';
-import { useState } from 'react';
-import type { IBook } from '@/Interfaces/book';
+import {
+  useGetBooksQuery,
+  useDeleteBookMutation,
+} from "../redux/features/book/book.api";
+import { useNavigate } from "react-router-dom";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { useState } from "react";
+import type { IBook } from "@/Interfaces/book";
 
 const AllBooksPage = () => {
   const { data: books, isLoading } = useGetBooksQuery(undefined);
-  console.log(books);
+  //   console.log(books);
   const [deleteBook] = useDeleteBookMutation();
   const navigate = useNavigate();
+     const [dialogOpen, setDialogOpen] = useState(false);
   const [selectedBookId, setSelectedBookId] = useState<string | null>(null);
 
-  const confirmDelete = async () => {
-    if (selectedBookId) {
-      await deleteBook(selectedBookId);
-      setSelectedBookId(null);
-    }
-  };
+  const handleOpenDialog = (bookId: string) => {
+  setSelectedBookId(bookId);
+  setDialogOpen(true);
+};
+
+const handleCancel = () => {
+  setSelectedBookId(null);
+  setDialogOpen(false);
+};
+
+const confirmDelete = async () => {
+  if (selectedBookId) {
+    await deleteBook(selectedBookId);
+    setSelectedBookId(null);
+    setDialogOpen(false);
+  }
+};
+
+
+
 
   if (isLoading) return <p className="text-center">Loading...</p>;
 
@@ -38,7 +56,7 @@ const AllBooksPage = () => {
           </tr>
         </thead>
         <tbody>
-          {books?.data?.map((book:IBook) => (
+          {books?.data?.map((book: IBook) => (
             <tr key={book._id} className="hover:bg-gray-50">
               <td className="border px-3 py-2">{book.title}</td>
               <td className="border px-3 py-2">{book.author}</td>
@@ -46,18 +64,20 @@ const AllBooksPage = () => {
               <td className="border px-3 py-2">{book.isbn}</td>
               <td className="border px-3 py-2 text-center">{book.copies}</td>
               <td className="border px-3 py-2 text-center">
-                {book.available ? 'yes' : 'no'}
+                {book.available ? "yes" : "no"}
               </td>
               <td className="border px-3 py-2 flex flex-wrap gap-2 justify-center">
                 <Button
                   variant="outline"
+                  className="bg-blue-500"
                   size="sm"
-                  onClick={() => navigate(`/edit-book/${book._id}`)}
+                  onClick={() => navigate(`/books/${book._id}`)}
                 >
                   View
                 </Button>
                 <Button
                   variant="outline"
+                  className="bg-green-500"
                   size="sm"
                   onClick={() => navigate(`/edit-book/${book._id}`)}
                 >
@@ -66,38 +86,39 @@ const AllBooksPage = () => {
                 <Button
                   variant="secondary"
                   size="sm"
+                  className="bg-cyan-400"
                   onClick={() => navigate(`/borrow/${book._id}`)}
                   disabled={!book.available}
                 >
                   Borrow
                 </Button>
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => setSelectedBookId(book._id)}
-                    >
-                      Delete
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <h3 className="text-lg font-semibold mb-4">Are you sure?</h3>
-                    <div className="flex justify-end gap-2">
-                      <Button variant="ghost" onClick={() => setSelectedBookId(null)}>
-                        Cancel
-                      </Button>
-                      <Button variant="destructive" onClick={confirmDelete}>
-                        Yes, Delete
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                <Button
+                variant="secondary"
+                className="bg-red-600"
+                  size="sm"
+                  onClick={() => handleOpenDialog(book._id)}
+                >
+                  Delete
+                </Button>
+             
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+  <DialogContent className="bg-white">
+    <h3 className="text-lg font-semibold mb-4">Are you sure you want to delete this book?</h3>
+    <div className="flex justify-end gap-2">
+      <Button onClick={handleCancel}>
+        Cancel
+      </Button>
+      <Button  onClick={confirmDelete}>
+        Yes, Delete
+      </Button>
+    </div>
+  </DialogContent>
+</Dialog>
     </div>
   );
 };

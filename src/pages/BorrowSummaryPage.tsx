@@ -1,10 +1,10 @@
-import type { IBorrowWithExtras } from '@/Interfaces/borrow';
+import type { IBorrow } from '@/Interfaces/borrow';
 import { useGetBorrowSummaryQuery } from '../redux/features/book/book.api';
 
 
 const BorrowSummaryPage = () => {
   const { data : loadedData , isLoading, error } = useGetBorrowSummaryQuery(undefined);
-  console.log(loadedData);
+//   console.log(loadedData?.data);
 
   if (isLoading) return <p className="text-center">Loading...</p>;
   if (error) return <p className="text-center text-red-500">Failed to load summary</p>;
@@ -21,10 +21,11 @@ const BorrowSummaryPage = () => {
           </tr>
         </thead>
         <tbody>
-          {loadedData?.data?.map((item:IBorrowWithExtras,index:number) => (
+          {loadedData?.data?.map((item:IBorrow,index:number) => (
             <tr key={index} className="hover:bg-gray-50">
-              <td className="border px-4 py-2">{item.bookTitle}</td>
-              <td className="border px-4 py-2">{item.totalBorrowed}</td>
+              <td className="border px-4 py-2">{item.book.title}</td>
+              <td className="border px-4 py-2">{item.book.isbn}</td>
+              <td className="border px-4 py-2">{item.totalQuantity}</td>
             </tr>
           ))}
         </tbody>

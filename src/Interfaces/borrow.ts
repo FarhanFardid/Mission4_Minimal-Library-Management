@@ -1,7 +1,7 @@
-export interface IBorrowWithExtras {
-  book: string;
-  quantity: number;
-  bookTitle: string;
-  dueDate: string;
-  totalBorrowed: number;
+export interface IBorrow {
+  book: {
+    title: string;
+    isbn: string;
+  };
+  totalQuantity: number;
 }
